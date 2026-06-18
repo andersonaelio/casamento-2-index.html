@@ -663,13 +663,16 @@ function enviarRSVP(){
   if(!nome){note('Por favor, preencha o seu nome.','err');return;}
   if(!tel){note('Deixe um telefone para contato.','err');return;}
   if(!attend){note('Escolha se você poderá comparecer.','err');return;}
-  let t='*Confirmação de Presença — Casamento Lucas & Isabella*%0A%0A';
-  t+='*Nome:* '+nome+'%0A';
-  t+='*Telefone:* '+tel+'%0A';
-  t+='*Presença:* '+(attend==='sim'?'Sim, estarei lá ✅':'Não poderei ir 💛')+'%0A';
-  if(attend==='sim') t+='*Acompanhantes:* '+acomp+'%0A';
-  if(msg) t+='*Mensagem:* '+msg+'%0A';
-  window.open('https://wa.me/'+CONFIG.whatsapp+'?text='+t,'_blank','noopener');
+  let linhas = [];
+  linhas.push('*Confirmação de Presença — Casamento Lucas & Isabella*');
+  linhas.push('');
+  linhas.push('*Nome:* ' + nome);
+  linhas.push('*Telefone:* ' + tel);
+  linhas.push('*Presença:* ' + (attend==='sim' ? 'Sim, estarei lá ✅' : 'Não poderei ir 💛'));
+  if(attend==='sim') linhas.push('*Acompanhantes:* ' + acomp);
+  if(msg) linhas.push('*Mensagem:* ' + msg);
+  const texto = encodeURIComponent(linhas.join('\n'));
+  window.open('https://wa.me/'+CONFIG.whatsapp+'?text='+texto,'_blank','noopener');
   note('Tudo pronto! Abrimos o WhatsApp — é só tocar em enviar. 💛','ok');
 }
 
